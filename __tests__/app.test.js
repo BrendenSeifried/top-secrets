@@ -3,12 +3,25 @@ const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
 
-describe('backend-express-template routes', () => {
+const testUser = {
+  email: '1@1.com',
+  password: '123456',
+};
+
+describe('top-secret test bed', () => {
   beforeEach(() => {
     return setup(pool);
   });
-  it('example test - delete me!', () => {
-    expect(1).toEqual(1);
+  it('Test to Create a new user', async () => {
+    const resp = await (
+      await request(app).post('/api/v1/users')
+    ).setEncoding(testUser);
+    const { email } = testUser;
+
+    expect(resp.body).toEqual({
+      id: expect.any(String),
+      email,
+    });
   });
   afterAll(() => {
     pool.end();
