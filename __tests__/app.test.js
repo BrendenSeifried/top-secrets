@@ -42,6 +42,15 @@ describe('top-secret test bed', () => {
       iat: expect.any(Number),
     });
   });
+
+  it('Test to confirm a 401 error when trying to list all users', async () => {
+    const res = await request(app).get('/api/v1/users');
+
+    expect(res.body).toEqual({
+      message: 'Please sign in to continue',
+      status: 401,
+    });
+  });
   afterAll(() => {
     pool.end();
   });
