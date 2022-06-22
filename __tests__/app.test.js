@@ -51,6 +51,15 @@ describe('top-secret test bed', () => {
       status: 401,
     });
   });
+
+  it('Test to confirm a 403 error when signed in but do not have Admin privileges', async () => {
+    const [agent] = await registerAndLogin();
+    const res = await agent.get('/api/v1/users');
+    expect(res.body).toEqual({
+      message: 'You are not authorized to view this page',
+      status: 403,
+    });
+  });
   afterAll(() => {
     pool.end();
   });
