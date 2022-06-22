@@ -9,6 +9,15 @@ const testUser = {
   password: '123456',
 };
 
+const registerAndLogin = async (userTestLogin = {}) => {
+  const password = userTestLogin.password ?? testUser.password;
+  const agent = request.agent(app);
+  const user = await UserService.create({ ...testUser, ...userTestLogin });
+  const { email } = user;
+  await agent.post('/api/v1/users/sessions').send({ email, password });
+  return [agent, user];
+};
+
 describe('top-secret test bed', () => {
   beforeEach(() => {
     return setup(pool);
