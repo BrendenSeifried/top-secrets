@@ -60,6 +60,12 @@ describe('top-secret test bed', () => {
       status: 403,
     });
   });
+
+  it('Test that returns a list of users when signed in as admin', async () => {
+    const [agent, user] = await registerAndLogin({ email: 'admin' });
+    const res = await agent.get('/api/v1/users');
+    expect(res.body).toEqual([{ ...user }]);
+  });
   afterAll(() => {
     pool.end();
   });
