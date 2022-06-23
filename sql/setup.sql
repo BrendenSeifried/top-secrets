@@ -19,13 +19,10 @@ CREATE TABLE secret_data (
 );
 
 
-
-
 INSERT INTO secret_data (
     title,
-    description,
-    created_at
+    description
 )
 
 VALUES 
-('first', 'test of description',  '2017-08-15 21:05:15.723336+07' );
+('first', 'test of description');

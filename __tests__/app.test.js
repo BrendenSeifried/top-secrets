@@ -70,6 +70,12 @@ describe('top-secret test bed', () => {
     const res = await agent.get('/api/v1/users');
     expect(res.body).toEqual([{ ...user }]);
   });
+
+  it('test to list secret data', async () => {
+    const [agent, user] = await registerAndLogin({ email: 'admin' });
+    const resp = await agent.get('/api/v1/secrets');
+    expect(resp.body).toEqual([{ ...user }]);
+  });
   afterAll(() => {
     pool.end();
   });
