@@ -11,12 +11,6 @@ const testUser = {
   password: '123456',
 };
 
-const secretTest = {
-  title: 'testSecret',
-  description: 'This is to confirm the FBI is NOT compromised ;)',
-  created_at: '2022-06-23T04:02:20.707Z',
-};
-
 const registerAndLogin = async (userTestLogin = {}) => {
   const password = userTestLogin.password ?? testUser.password;
   const agent = request.agent(app);
@@ -78,7 +72,7 @@ describe('top-secret test bed', () => {
   });
 
   it('test to list secret data', async () => {
-    const resp = await request(app).get('/api/v1/users');
+    const resp = await request(app).get('/api/v1/ad');
 
     expect(resp.body).toEqual({
       message: 'Please sign in to continue',
