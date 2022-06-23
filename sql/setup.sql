@@ -21,8 +21,9 @@ CREATE TABLE secret_data (
 
 INSERT INTO secret_data (
     title,
-    description
+    description,
+    created_at
 )
 
 VALUES 
-('first', 'test of description');
+('first', 'test of description', '2022-06-23T04:02:20.707Z');

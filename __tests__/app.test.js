@@ -11,6 +11,12 @@ const testUser = {
   password: '123456',
 };
 
+const secretTest = {
+  title: 'testSecret',
+  description: 'This is to confirm the FBI is NOT compromised ;)',
+  created_at: '2022-06-23T04:02:20.707Z',
+};
+
 const registerAndLogin = async (userTestLogin = {}) => {
   const password = userTestLogin.password ?? testUser.password;
   const agent = request.agent(app);
@@ -72,10 +78,26 @@ describe('top-secret test bed', () => {
   });
 
   it('test to list secret data', async () => {
-    const [agent, user] = await registerAndLogin({ email: 'admin' });
-    const resp = await agent.get('/api/v1/secrets');
-    expect(resp.body).toEqual([{ ...user }]);
+    // const [agent, user] = await registerAndLogin({ email: 'admin' });
+    // const resp = await agent.get('/api/v1/secrets');
+    const resp = await request(app).get('/api/v1/users');
+
+    expect(resp.body).toEqual([
+      {
+        id: '1',
+        title: 'first',
+        description: 'test of description',
+        created_at: '2022-06-23T04:02:20.707Z',
+      },
+    ]);
   });
+
+  // expect(resp.body).toEqual({
+  //   id: expect.any(String),
+  //   first,
+  //   last,
+  //   email,
+  // });
   afterAll(() => {
     pool.end();
   });
