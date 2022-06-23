@@ -78,9 +78,17 @@ describe('top-secret test bed', () => {
   });
 
   it('test to list secret data', async () => {
-    // const [agent, user] = await registerAndLogin({ email: 'admin' });
-    // const resp = await agent.get('/api/v1/secrets');
     const resp = await request(app).get('/api/v1/users');
+
+    expect(resp.body).toEqual({
+      message: 'Please sign in to continue',
+      status: 401,
+    });
+  });
+
+  it('test to list secret data', async () => {
+    const [agent] = await registerAndLogin({ email: 'admin' });
+    const resp = await agent.get('/api/v1/secrets');
 
     expect(resp.body).toEqual([
       {
@@ -92,12 +100,6 @@ describe('top-secret test bed', () => {
     ]);
   });
 
-  // expect(resp.body).toEqual({
-  //   id: expect.any(String),
-  //   first,
-  //   last,
-  //   email,
-  // });
   afterAll(() => {
     pool.end();
   });
