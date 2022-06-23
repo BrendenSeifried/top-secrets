@@ -72,7 +72,7 @@ describe('top-secret test bed', () => {
   });
 
   it('test to list secret data', async () => {
-    const resp = await request(app).get('/api/v1/ad');
+    const resp = await request(app).get('/api/v1/secrets');
 
     expect(resp.body).toEqual({
       message: 'Please sign in to continue',
