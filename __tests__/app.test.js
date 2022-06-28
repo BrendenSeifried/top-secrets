@@ -3,12 +3,19 @@ const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
 const UserService = require('../lib/services/UserService');
+const User = require('../lib/models/User');
 
 const testUser = {
   first: 'James',
   last: 'Bond',
   email: '1@1.com',
   password: '123456',
+};
+
+const secretTest = {
+  title: 'Testing',
+  description: 'Totally not hacked FBI account ;)',
+  // created_at: '2022-06-23T04:02:20.707Z',
 };
 
 const registerAndLogin = async (userTestLogin = {}) => {
@@ -89,9 +96,22 @@ describe('top-secret test bed', () => {
         id: '1',
         title: 'first',
         description: 'test of description',
-        created_at: '2022-06-23T04:02:20.707Z',
+        created_at: expect.any(String),
       },
     ]);
+  });
+
+  it('check to confirm that user deletes', async () => {
+    const [agent, user] = await registerAndLogin();
+    const me = await agent.get('/api/v1/users/me');
+
+    const remove = await agent.delete(`/api/v1/users/sessions`);
+
+    expect(remove.body).not.toEqual({
+      ...user,
+      exp: expect.any(Number),
+      iat: expect.any(Number),
+    });
   });
 
   afterAll(() => {
